@@ -87,6 +87,34 @@ app.get('/jokebook/random-joke', (req, res) => {
     })
 })
 
+app.post('/jokebook/joke/:category', (req, res) => {
+    const category = req.params.category
+
+    if(category === 'funnyJoke') {
+        funnyJoke.push({
+            'joke': req.body.joke,
+            'response': req.body.joke
+        })
+
+        res.json({
+            success: "joke added successfully..."
+        })
+    } else if (category === 'lameJoke') {
+        lameJoke.push({
+            'joke': req.body.joke,
+            'response': req.body.joke
+        })
+
+        res.json({
+            success: "joke added successfully..."
+        })
+    }
+
+    res.json({
+        error: "no jokes for category ..."
+    })
+})
+
 //TODO3
 
 
