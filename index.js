@@ -1,6 +1,8 @@
 'use strict';
 
-const express = require('express');
+import { categories, funnyJoke, lameJoke } from "./data.js"
+import express from 'express'
+
 const app = express();
 
 // define endpoint for exercise 1 here
@@ -49,7 +51,41 @@ app.get('/math/power/:base/:exponent', (req, res) => {
 })
 
 //TODO2
+app.get('/jokebook/categories', (req, res) => {
+    return res.json({
+        categories: categories
+    })
+})
 
+app.get('/jokebook/joke/:category', (req, res) => {
+    const category = req.params.category
+
+    if(category === 'funnyJoke') {
+        const joke = funnyJoke[Math.floor(Math.random() * funnyJoke.length)]
+        res.json({
+            joke
+        })
+    }
+    else if (category === 'lameJoke') {
+        const joke = lameJoke[Math.floor(Math.random() * lameJoke.length)]
+        res.json({
+            joke
+        })
+    }
+
+    return res.json({
+        error: `no jokes for category ${ category }`
+    })
+})
+
+app.get('/jokebook/random-joke', (req, res) => {
+    const all = funnyJoke.concat(lameJoke)
+    const random = all[Math.floor(Math.random() * all.length)]
+
+    res.json({
+        random
+    })
+})
 
 //TODO3
 
